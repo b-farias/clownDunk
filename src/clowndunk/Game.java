@@ -38,12 +38,40 @@ public class Game {
     
     public boolean guess(String guess) {
         if (guess.length()>1) {
-            for (String word : words) {
-                if (guess.equals(word)) {
-                    
+            if (guess.contains(" ")) {
+               String[] gwords = guess.split(" "); 
+                for (int i = 0; i< words.length; i++) {
+                    if (words[i].equals(gwords[0])) {
+                        for (int j = 1; j < gwords.length; j++) {
+                            if (!gwords[i].equals(words[i+j])) {
+                                return false;
+                            }
+                        }
+                    }
                 }
+                return true;
+            }
+            else {
+                 for (String wword : words) {
+                     if (guess.equals(wword)) {
+                         return true;
+                     }
+                }
+                return false;
             }
         }
-        return true;
+        for (char letter : letters) {
+            if (letter==guess.charAt(0)) {
+                for (int i = 0; i < letters.length; i++) {
+                    if (guess.charAt(0)==letters[i]) {
+                        letters[i]=0;
+                    }
+                }
+                hint.replace(guess.charAt(0), '0');
+                guessed.add(guess.charAt(0));
+                return true;
+            }
+        }
+        return false;
     }
 }
