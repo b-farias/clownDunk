@@ -76,11 +76,9 @@ public class Game {
                                         newHint+=hint.charAt(i);
                                     }
                                 }
-                
-                                guessed.add(gletter);
-                                return true;
                             }
                         }
+                        guessed.add(gletter);
                     }
                 }
                 return true;
@@ -113,11 +111,9 @@ public class Game {
                                                 newHint+=hint.charAt(i);
                                             }
                                         }
-
-                                        guessed.add(gletter);
-                                        return true;
                                     }
                                 }
+                                guessed.add(gletter);
                             }
                         }
                          return true;
