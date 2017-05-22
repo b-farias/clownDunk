@@ -23,7 +23,7 @@ public class Game {
     }
     
     public Game(String start) {
-        word = start;
+        word = start.toLowerCase();
         letters = word.toCharArray();
         words=word.split(" ");
         for (int i = 0; i < word.length(); i++) {
@@ -41,10 +41,10 @@ public class Game {
         if (guess.length()>1) {
             char[] gletters;
             if (guess.contains(" ")) {
-               String[] gwords = guess.split(" "); 
-                for (int i = 0; i< words.length; i++) {
+                String[] gwords = guess.split(" "); 
+                for (int i = 0; i< words.length-gwords.length; i++) {
                     if (words[i].equals(gwords[0])) {
-                        for (int j = 1; j < gwords.length; j++) {
+                        for (int j = 0; j < gwords.length; j++) {
                             if (!gwords[i].equals(words[i+j])) {
                                 return false;
                             }
@@ -76,9 +76,12 @@ public class Game {
                                         newHint+=hint.charAt(i);
                                     }
                                 }
+                                hint=newHint;
+                                newHint="";
+                                guessed.add(gletter);
                             }
                         }
-                        guessed.add(gletter);
+                        
                     }
                 }
                 return true;
@@ -98,22 +101,29 @@ public class Game {
                                             }
                                         }
                                         //NEW HINT
-                                        for (int i = 0; i < hint.length(); i++) {
-                                            if (hint.charAt(i)=='_') {
-                                                if (gletter==word.charAt(i)) {
-                                                    newHint+=gletter;
+                                        if (!guessed.contains(gletter)) {
+                                            for (int i = 0; i < word.length(); i++) {
+                                                System.out.println(i);
+                                                if (hint.charAt(i)=='_') {
+                                                    if (gletter==word.charAt(i)) {
+                                                        newHint+=gletter;
+                                                    }
+                                                    else {
+                                                        newHint+="_";
+                                                    }
                                                 }
                                                 else {
-                                                    newHint+="_";
+                                                    newHint+=hint.charAt(i);
                                                 }
+                                                
                                             }
-                                            else {
-                                                newHint+=hint.charAt(i);
-                                            }
+                                            hint=newHint;
+                                            newHint="";
+                                            guessed.add(gletter);
                                         }
-                                    }
+
+                                    } 
                                 }
-                                guessed.add(gletter);
                             }
                         }
                          return true;
@@ -143,11 +153,17 @@ public class Game {
                         newHint+=hint.charAt(i);
                     }
                 }
-                
+                hint=newHint;
                 guessed.add(guess.charAt(0));
                 return true;
             }
         }
         return false;
     }
+
+    public String getHint() {
+        return hint;
+    }
+    
+    
 }
