@@ -37,7 +37,9 @@ public class Game {
     }
     
     public boolean guess(String guess) {
+        String newHint = "";
         if (guess.length()>1) {
+            char[] gletters;
             if (guess.contains(" ")) {
                String[] gwords = guess.split(" "); 
                 for (int i = 0; i< words.length; i++) {
@@ -49,16 +51,80 @@ public class Game {
                         }
                     }
                 }
+                gletters = guess.toCharArray();
+                for (char gletter : gletters) {
+                    if (gletter==' ') {    }
+                    else {
+                        for (char letter : letters) {
+                            if (letter==gletter) {
+                                for (int i = 0; i < letters.length; i++) {
+                                    if (gletter==letters[i]) {
+                                        letters[i]=0;
+                                    }
+                                }
+                                //NEW HINT
+                                for (int i = 0; i < hint.length(); i++) {
+                                    if (hint.charAt(i)=='_') {
+                                        if (gletter==word.charAt(i)) {
+                                            newHint+=gletter;
+                                        }
+                                        else {
+                                            newHint+="_";
+                                        }
+                                    }
+                                    else {
+                                        newHint+=hint.charAt(i);
+                                    }
+                                }
+                
+                                guessed.add(gletter);
+                                return true;
+                            }
+                        }
+                    }
+                }
                 return true;
             }
             else {
                  for (String wword : words) {
                      if (guess.equals(wword)) {
+                         gletters = guess.toCharArray();
+                         for (char gletter : gletters) {
+                            if (gletter==' ') {    }
+                            else {
+                                for (char letter : letters) {
+                                    if (letter==gletter) {
+                                        for (int i = 0; i < letters.length; i++) {
+                                            if (gletter==letters[i]) {
+                                                letters[i]=0;
+                                            }
+                                        }
+                                        //NEW HINT
+                                        for (int i = 0; i < hint.length(); i++) {
+                                            if (hint.charAt(i)=='_') {
+                                                if (gletter==word.charAt(i)) {
+                                                    newHint+=gletter;
+                                                }
+                                                else {
+                                                    newHint+="_";
+                                                }
+                                            }
+                                            else {
+                                                newHint+=hint.charAt(i);
+                                            }
+                                        }
+
+                                        guessed.add(gletter);
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
                          return true;
                      }
                 }
                 return false;
-            }
+            }  
         }
         for (char letter : letters) {
             if (letter==guess.charAt(0)) {
@@ -67,7 +133,21 @@ public class Game {
                         letters[i]=0;
                     }
                 }
-                hint.replace(guess.charAt(0), '0');
+                //NEW HINT
+                for (int i = 0; i < hint.length(); i++) {
+                    if (hint.charAt(i)=='_') {
+                        if (guess.charAt(0)==word.charAt(i)) {
+                            newHint+=guess.charAt(0);
+                        }
+                        else {
+                            newHint+="_";
+                        }
+                    }
+                    else {
+                        newHint+=hint.charAt(i);
+                    }
+                }
+                
                 guessed.add(guess.charAt(0));
                 return true;
             }
